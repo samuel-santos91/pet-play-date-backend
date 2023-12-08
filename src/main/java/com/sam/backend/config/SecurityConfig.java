@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+import jakarta.servlet.DispatcherType;
+
 @Configuration
 public class SecurityConfig {
 
@@ -17,6 +19,8 @@ public class SecurityConfig {
       .csrf(CsrfConfigurer::disable)
       .authorizeHttpRequests(requests ->
         requests
+          .dispatcherTypeMatchers(DispatcherType.ERROR)
+          .permitAll()
           .requestMatchers("/auth/register")
           .permitAll()
           .requestMatchers("/auth/login")

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -16,7 +18,7 @@ public class AuthController {
   private AuthService authService;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthResponse> register(@RequestBody RegisterDTO data) {
+  public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterDTO data) {
     return new ResponseEntity<>(
       this.authService.register(data),
       HttpStatus.CREATED
