@@ -1,6 +1,7 @@
 package com.sam.backend.chatroom;
 
 import com.sam.backend.match.Match;
+import com.sam.backend.message.Message;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,9 @@ public class ChatRoom {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "match_id", referencedColumnName = "id")
   private Match match;
+
+  @OneToOne(mappedBy = "chatrooom")
+  private Message message;
 
   public ChatRoom() {}
 }

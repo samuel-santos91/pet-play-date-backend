@@ -1,6 +1,7 @@
 package com.sam.backend.user;
 
 import com.sam.backend.match.Match;
+import com.sam.backend.message.Message;
 import com.sam.backend.pet.Pet;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,19 +47,29 @@ public class User implements UserDetails {
   @JoinColumn(name = "pet_id", referencedColumnName = "id")
   private Pet pet;
 
+  @OneToOne(cascade = CascadeType.ALL)
+  private Message message;
+
+  @OneToMany(
+    fetch = FetchType.LAZY,
+    mappedBy = "user",
+    cascade = CascadeType.ALL
+  )
+  private List<Message> messageList;
+
   @OneToMany(
     fetch = FetchType.LAZY,
     mappedBy = "user1",
     cascade = CascadeType.ALL
   )
-  private List<Match> MatchListAsUser1;
+  private List<Match> matchListAsUser1;
 
   @OneToMany(
     fetch = FetchType.LAZY,
     mappedBy = "user2",
     cascade = CascadeType.ALL
   )
-  private List<Match> MatchListAsUser2;
+  private List<Match> matchListAsUser2;
 
   @Enumerated(EnumType.STRING)
   private Role role;
