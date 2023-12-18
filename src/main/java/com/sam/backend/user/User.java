@@ -13,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -70,6 +72,17 @@ public class User implements UserDetails {
     cascade = CascadeType.ALL
   )
   private List<Match> matchListAsUser2;
+
+  @ManyToMany
+  @JoinTable(
+    name = "user_likes",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "liked_user_id")
+  )
+  private List<User> likedUsers;
+
+  @ManyToMany(mappedBy = "likedUsers")
+  private List<User> usersLikedBy;
 
   @Enumerated(EnumType.STRING)
   private Role role;

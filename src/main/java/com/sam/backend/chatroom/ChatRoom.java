@@ -27,7 +27,7 @@ public class ChatRoom {
   @JoinColumn(name = "match_id", referencedColumnName = "id")
   private Match match;
 
-  @OneToOne(mappedBy = "chatrooom")
+  @OneToOne(mappedBy = "chatroom")
   private Message message;
 
   public ChatRoom() {}

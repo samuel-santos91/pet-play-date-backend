@@ -29,7 +29,7 @@ public class Message {
   private String content;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @JoinColumn(name = "sender_id", referencedColumnName = "id")
   private User user;
 
   @OneToOne(cascade = CascadeType.ALL)
