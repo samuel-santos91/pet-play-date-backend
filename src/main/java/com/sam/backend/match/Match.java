@@ -1,5 +1,6 @@
 package com.sam.backend.match;
 
+import com.sam.backend.chatroom.ChatRoom;
 import com.sam.backend.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +30,9 @@ public class Match {
   @ManyToOne
   @JoinColumn(name = "user2_id")
   private User user2;
+
+  @OneToOne(mappedBy = "match")
+  private ChatRoom chatroom;
 
   public Match() {}
 
