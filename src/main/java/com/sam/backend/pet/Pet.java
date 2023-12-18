@@ -1,7 +1,6 @@
 package com.sam.backend.pet;
 
 import com.sam.backend.user.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,30 +13,31 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "pets")
+@Getter
+@Setter
 public class Pet {
 
-  @Getter
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
-  @Getter
-  @Setter
   private String name;
 
   @Column
-  @Getter
-  @Setter
   private Number age;
 
   @Column
-  @Getter
-  @Setter
   private String size;
 
-  @Getter
-  @Setter
   @OneToOne(mappedBy = "pet")
   private User user;
+
+  public Pet() {}
+
+  public Pet(String name, Number age, String size) {
+    this.name = name;
+    this.age = age;
+    this.size = size;
+  }
 }
