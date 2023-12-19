@@ -3,6 +3,8 @@ package com.sam.backend.pet;
 import com.sam.backend.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,17 +29,22 @@ public class Pet {
   @Column
   private Number age;
 
+  @Enumerated(EnumType.STRING)
   @Column
-  private String size;
+  private PetSizes size;
+
+  @Column
+  private String description;
 
   @OneToOne(mappedBy = "pet")
   private User user;
 
   public Pet() {}
 
-  public Pet(String name, Number age, String size) {
+  public Pet(String name, Number age, PetSizes size, String description) {
     this.name = name;
     this.age = age;
     this.size = size;
+    this.description = description;
   }
 }
