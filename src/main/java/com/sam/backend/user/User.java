@@ -49,9 +49,6 @@ public class User implements UserDetails {
   @JoinColumn(name = "pet_id", referencedColumnName = "id")
   private Pet pet;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  private Message message;
-
   @OneToMany(
     fetch = FetchType.LAZY,
     mappedBy = "user",
