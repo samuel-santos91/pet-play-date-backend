@@ -45,7 +45,11 @@ public class User implements UserDetails {
   @Column
   private String password;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(
+    mappedBy = "userId",
+    cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY
+  )
   @JoinColumn(name = "pet_id", referencedColumnName = "id")
   private Pet pet;
 

@@ -14,7 +14,7 @@ public class PetCreateDTO {
   @Size(min = 2, message = "pet name should have at least 2 characters")
   private String name;
 
-  private Number age;
+  private int age;
 
   @NotNull
   private PetSizes size;
@@ -26,7 +26,7 @@ public class PetCreateDTO {
 
   public PetCreateDTO() {}
 
-  public PetCreateDTO(String name, Number age, PetSizes size, String description, Long userId) {
+  public PetCreateDTO(String name, int age, PetSizes size, String description, Long userId) {
     this.name = name;
     this.age = age;
     this.size = size;
