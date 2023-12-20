@@ -21,12 +21,16 @@ public class PetCreateDTO {
 
   private String description;
 
+  @NotNull
+  private Long userId;
+
   public PetCreateDTO() {}
 
-  public PetCreateDTO(String name, Number age, PetSizes size, String description) {
+  public PetCreateDTO(String name, Number age, PetSizes size, String description, Long userId) {
     this.name = name;
     this.age = age;
     this.size = size;
     this.description = description;
+    this.userId = userId;
   }
 }

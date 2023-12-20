@@ -17,7 +17,7 @@ public class PetController {
   private PetService petService;
 
   @PostMapping
-  public ResponseEntity<Pet> createEmployee(
+  public ResponseEntity<Pet> createPet(
     @Valid @RequestBody PetCreateDTO data
   ) {
     Pet newPet = this.petService.createPet(data);
