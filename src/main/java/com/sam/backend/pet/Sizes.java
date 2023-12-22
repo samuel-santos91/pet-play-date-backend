@@ -1,6 +1,6 @@
 package com.sam.backend.pet;
 
-public enum PetSizes {
+public enum Sizes {
   SMALL,
   MEDIUM,
   LARGE,

@@ -17,7 +17,7 @@ public class PetCreateDTO {
   private int age;
 
   @NotNull
-  private PetSizes size;
+  private Sizes size;
 
   private String description;
 
@@ -26,7 +26,7 @@ public class PetCreateDTO {
 
   public PetCreateDTO() {}
 
-  public PetCreateDTO(String name, int age, PetSizes size, String description, Long userId) {
+  public PetCreateDTO(String name, int age, Sizes size, String description, Long userId) {
     this.name = name;
     this.age = age;
     this.size = size;

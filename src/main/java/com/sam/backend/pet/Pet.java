@@ -33,7 +33,7 @@ public class Pet {
 
   @Enumerated(EnumType.STRING)
   @Column
-  private PetSizes size;
+  private Sizes size;
 
   @Column
   private String description;
@@ -47,7 +47,7 @@ public class Pet {
   public Pet(
     String name,
     int age,
-    PetSizes size,
+    Sizes size,
     String description
    
   ) {
