@@ -32,7 +32,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 public class User implements UserDetails {
 
-  @Id 
+  @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
@@ -45,12 +45,14 @@ public class User implements UserDetails {
   @Column
   private String password;
 
-  @OneToOne(
-    cascade = CascadeType.ALL,
-    mappedBy = "owner",
-    fetch = FetchType.LAZY
-  )
-  private Pet pet;
+  // @OneToOne(
+  //   cascade = CascadeType.ALL,
+  //   mappedBy = "owner",
+  //   fetch = FetchType.LAZY
+  // )
+  // private Pet pet;
+
+  // COMMENTING THIS OUT??????
 
   @OneToMany(
     fetch = FetchType.LAZY,
@@ -59,19 +61,8 @@ public class User implements UserDetails {
   )
   private List<Message> messageList;
 
-  @OneToMany(
-    fetch = FetchType.LAZY,
-    mappedBy = "user1",
-    cascade = CascadeType.ALL
-  )
-  private List<Match> matchListAsUser1;
-
-  @OneToMany(
-    fetch = FetchType.LAZY,
-    mappedBy = "user2",
-    cascade = CascadeType.ALL
-  )
-  private List<Match> matchListAsUser2;
+  @ManyToMany(mappedBy = "users")
+  private List<Match> matchList;
 
   @ManyToMany
   @JoinTable(

@@ -7,9 +7,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,21 +25,20 @@ public class Match {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "user1_id")
-  private User user1;
-
-  @ManyToOne
-  @JoinColumn(name = "user2_id")
-  private User user2;
+  @ManyToMany
+  @JoinTable(
+    name = "match_users",
+    joinColumns = @JoinColumn(name = "match_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_id")
+  )
+  private List<User> users;
 
   @OneToOne(mappedBy = "match")
   private ChatRoom chatroom;
 
   public Match() {}
 
-  public Match(User user1, User user2) {
-    this.user1 = user1;
-    this.user2 = user2;
+  public Match(List<User> users) {
+    this.users = users;
   }
 }
