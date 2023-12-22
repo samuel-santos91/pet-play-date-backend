@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +19,14 @@ public class PetController {
   private PetService petService;
 
   @PostMapping
-  public ResponseEntity<Pet> createPet(
-    @Valid @RequestBody PetCreateDTO data
-  ) {
+  public ResponseEntity<Pet> createPet(@Valid @RequestBody PetCreateDTO data) {
     Pet newPet = this.petService.createPet(data);
     return new ResponseEntity<>(newPet, HttpStatus.CREATED);
+  }
+
+  @GetMapping("/user/{userId}")
+  public ResponseEntity<Boolean> isCurrentUserOwner(@PathVariable Long userId) {
+    boolean isOwner = petService.isCurrentUserOwner(userId);
+    return ResponseEntity.ok(isOwner);
   }
 }
