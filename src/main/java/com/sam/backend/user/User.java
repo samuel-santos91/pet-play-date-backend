@@ -32,7 +32,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 public class User implements UserDetails {
 
-  @Id
+  @Id 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
@@ -46,11 +46,10 @@ public class User implements UserDetails {
   private String password;
 
   @OneToOne(
-    mappedBy = "userId",
     cascade = CascadeType.ALL,
+    mappedBy = "owner",
     fetch = FetchType.LAZY
   )
-  @JoinColumn(name = "pet_id", referencedColumnName = "id")
   private Pet pet;
 
   @OneToMany(

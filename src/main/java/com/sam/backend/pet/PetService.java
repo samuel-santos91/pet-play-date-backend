@@ -24,7 +24,7 @@ public class PetService {
     Pet newPet = modelMapper.map(data, Pet.class);
 
     User user = userRepository.findById(data.getUserId()).orElse(null);
-    newPet.setUserId(user);
+    newPet.setOwner(user);
 
     Pet created = this.petRepository.save(newPet);
 

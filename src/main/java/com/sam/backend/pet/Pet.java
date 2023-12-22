@@ -39,15 +39,22 @@ public class Pet {
   private String description;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
-  private User userId;
+  @JoinColumn(name = "owner_id", referencedColumnName = "id")
+  private User owner;
 
   public Pet() {}
 
-  public Pet(String name, int age, PetSizes size, String description) {
+  public Pet(
+    String name,
+    int age,
+    PetSizes size,
+    String description
+   
+  ) {
     this.name = name;
     this.age = age;
     this.size = size;
     this.description = description;
+  
   }
 }
