@@ -3,9 +3,10 @@ package com.sam.backend.user;
 import com.sam.backend.auth.RegisterDTO;
 import com.sam.backend.pet.Pet;
 import com.sam.backend.pet.PetRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import org.modelmapper.ModelMapper;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,14 @@ public class UserService {
   @Autowired
   private PetRepository petRepository;
 
-  @Autowired
-  private ModelMapper modelMapper;
-
   public User create(RegisterDTO data) {
-    User newUser = modelMapper.map(data, User.class);
+    User newUser = new User(
+      data.getUsername(),
+      data.getEmail(),
+      data.getPassword()
+    );
 
-    User created = this.userRepository.save(newUser);
-
-    return created;
+    return this.userRepository.save(newUser);
   }
 
   public User getById(Long id) {
@@ -52,5 +52,24 @@ public class UserService {
       }
     }
     return false;
+  }
+
+  public void likePet(LikeDTO data) {
+    Optional<User> userOptional = userRepository.findById(data.getUserId());
+    Optional<User> ownerOptional = userRepository.findById(data.getOwnerId());
+
+    if (userOptional.isPresent() && ownerOptional.isPresent()) {
+      User user = userOptional.get();
+      User owner = ownerOptional.get();
+
+      user.getLikedUsers().add(owner);
+
+      owner.getUserLikedBy().add(user);
+
+      userRepository.save(user);
+      userRepository.save(owner);
+    } else {
+      throw new EntityNotFoundException("User or owner not found");
+    }
   }
 }

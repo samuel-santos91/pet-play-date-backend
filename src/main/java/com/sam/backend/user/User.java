@@ -73,7 +73,7 @@ public class User implements UserDetails {
   private List<User> likedUsers;
 
   @ManyToMany(mappedBy = "likedUsers")
-  private List<User> usersLikedBy;
+  private List<User> userLikedBy;
 
   @Enumerated(EnumType.STRING)
   private Role role;

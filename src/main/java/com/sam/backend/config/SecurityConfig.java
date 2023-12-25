@@ -30,6 +30,8 @@ public class SecurityConfig {
           .permitAll()
           .requestMatchers("/auth/login")
           .permitAll()
+          // .requestMatchers("/users") //REMOVE THIS
+          // .permitAll()
           .anyRequest()
           .authenticated()
       )
