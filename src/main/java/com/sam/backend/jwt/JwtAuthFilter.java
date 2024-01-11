@@ -50,7 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         this.jwtService.isTokenValid(jwtToken, user) + " IS TOKEN VALID?"
       );
 
-      if (this.jwtService.isTokenValid(jwtToken, user)) {
+      if (this.jwtService.isTokenValid(jwtToken, user)) { 
         UsernamePasswordAuthenticationToken userPassToken = new UsernamePasswordAuthenticationToken(
           user,
           null,
