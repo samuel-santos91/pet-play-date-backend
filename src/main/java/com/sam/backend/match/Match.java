@@ -1,14 +1,14 @@
 package com.sam.backend.match;
 
 import com.sam.backend.chatroom.ChatRoom;
-import com.sam.backend.user.User;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
@@ -25,20 +25,20 @@ public class Match {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToMany
-  @JoinTable(
+  @ElementCollection
+  @CollectionTable(
     name = "match_users",
-    joinColumns = @JoinColumn(name = "match_id"),
-    inverseJoinColumns = @JoinColumn(name = "user_id")
+    joinColumns = @JoinColumn(name = "match_id")
   )
-  private List<User> users;
+  @Column(name = "user_id") 
+  private List<Long> usersId;
 
   @OneToOne(mappedBy = "match")
   private ChatRoom chatroom;
 
   public Match() {}
 
-  public Match(List<User> users) {
-    this.users = users;
+  public Match(List<Long> usersId) {
+    this.usersId = usersId;
   }
 }

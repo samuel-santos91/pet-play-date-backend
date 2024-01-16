@@ -1,6 +1,8 @@
 package com.sam.backend.user;
 
 import com.sam.backend.auth.RegisterDTO;
+import com.sam.backend.match.Match;
+import com.sam.backend.match.MatchRepository;
 import com.sam.backend.pet.Pet;
 import com.sam.backend.pet.PetRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,6 +18,9 @@ public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private MatchRepository matchRepository;
 
   @Autowired
   private PetRepository petRepository;
@@ -63,7 +68,6 @@ public class UserService {
       User owner = ownerOptional.get();
 
       user.getLikedUsers().add(owner);
-
       owner.getUserLikedBy().add(user);
 
       userRepository.save(user);
@@ -71,5 +75,40 @@ public class UserService {
     } else {
       throw new EntityNotFoundException("User or owner not found");
     }
+  }
+
+  public boolean checkAndCreateMatch(Long userId1, Long userId2) {
+    User user1 = userRepository
+      .findById(userId1)
+      .orElseThrow(() ->
+        new EntityNotFoundException("User with ID " + userId1 + " not found")
+      );
+
+    User user2 = userRepository
+      .findById(userId2)
+      .orElseThrow(() ->
+        new EntityNotFoundException("User with ID " + userId2 + " not found")
+      );
+
+    if (
+      user1.getLikedUsers().contains(user2) &&
+      user2.getLikedUsers().contains(user1)
+    ) {
+      Match match = createMatch(user1, user2);
+
+      user1.getMatchList().add(match.getId());
+      user2.getMatchList().add(match.getId());
+
+      userRepository.save(user1);
+      userRepository.save(user2);
+
+      return true;
+    }
+    return false;
+  }
+
+  private Match createMatch(User user1, User user2) {
+    Match match = new Match(List.of(user1.getId(), user2.getId()));
+    return matchRepository.save(match);
   }
 }

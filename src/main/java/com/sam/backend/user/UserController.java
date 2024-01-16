@@ -2,7 +2,6 @@ package com.sam.backend.user;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,18 @@ public class UserController {
   public ResponseEntity<String> likePet(@Valid @RequestBody LikeDTO data) {
     try {
       userService.likePet(data);
-      return ResponseEntity.ok("Pet liked successfully");
+      boolean matched = userService.checkAndCreateMatch(
+        data.getUserId(),
+        data.getOwnerId()
+      );
+
+      if (matched) {
+        return ResponseEntity.ok(
+          "Pet liked successfully, and a match is created"
+        );
+      } else {
+        return ResponseEntity.ok("Pet liked successfully");
+      }
     } catch (EntityNotFoundException e) {
       return ResponseEntity
         .status(HttpStatus.NOT_FOUND)

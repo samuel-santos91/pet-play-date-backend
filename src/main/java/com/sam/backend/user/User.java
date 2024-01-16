@@ -1,11 +1,11 @@
 package com.sam.backend.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sam.backend.match.Match;
 import com.sam.backend.message.Message;
 import com.sam.backend.pet.Pet;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -48,7 +48,7 @@ public class User implements UserDetails {
   private String password;
 
   @OneToOne(
-    cascade = CascadeType.ALL, 
+    cascade = CascadeType.ALL,
     mappedBy = "owner",
     fetch = FetchType.LAZY
   )
@@ -62,8 +62,8 @@ public class User implements UserDetails {
   )
   private List<Message> messageList;
 
-  @ManyToMany(mappedBy = "users")
-  private List<Match> matchList;
+  @ElementCollection
+  private List<Long> matchList;
 
   @ManyToMany
   @JoinTable(
@@ -74,7 +74,7 @@ public class User implements UserDetails {
   @JsonIgnore
   private List<User> likedUsers;
 
-  @ManyToMany(mappedBy = "likedUsers") 
+  @ManyToMany(mappedBy = "likedUsers")
   @JsonIgnore
   private List<User> userLikedBy;
 
@@ -83,11 +83,11 @@ public class User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-      if (this.role != null) {
-          return List.of(new SimpleGrantedAuthority(this.role.name()));
-      } else {
-          return Collections.emptyList(); 
-      }
+    if (this.role != null) {
+      return List.of(new SimpleGrantedAuthority(this.role.name()));
+    } else {
+      return Collections.emptyList();
+    }
   }
 
   @Override
